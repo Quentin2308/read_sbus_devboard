@@ -217,8 +217,8 @@ class SbusReader:
     def _display_latest_packet_curses(self, stdscr):
         import curses
         
-        curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
-        curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
+        #curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
+        #curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
 
         stdscr.clear()
         stdscr.nodelay(True)
@@ -240,10 +240,10 @@ class SbusReader:
                         stdscr.addstr(int(i/2), (i % 2)*25, f'Channel # {i+1}: {val}   ')
                     stdscr.addstr(8,0,f'Packet Age(milliseconds): {self.get_latest_packet_age()}        ')
                     if (_is_connected):
-                        stdscr.addstr(9,0,'CONNECTED',curses.color_pair(1))
+                        stdscr.addstr(9,0,'CONNECTED')
                         stdscr.addstr(9,9,'   ')
                     else:
-                        stdscr.addstr(9,0,'DISCONNECTED',curses.color_pair(2))
+                        stdscr.addstr(9,0,'DISCONNECTED')
                     
                     stdscr.addstr(10,0,'Press any key to stop.')
         
