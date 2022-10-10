@@ -61,7 +61,7 @@ def device_test(reader):
     T = 1/f
     
     TRANSMITTER_MIN_VAL = 352
-    TRANSMITTER_MAX_VAL = 17796
+    TRANSMITTER_MAX_VAL = (2047-352)*2
     SERVO_MIN_VAL = 500
     SERVO_MAX_VAL = 2500
 
