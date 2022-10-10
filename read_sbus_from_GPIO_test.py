@@ -1,6 +1,8 @@
 import read_sbus_from_GPIO
 import time
 from statistics import mean
+from periphery import GPIO
+
 
 def connection_test(reader):
     print('Waiting for connection...')
@@ -52,7 +54,11 @@ def device_test(reader):
     #servo used here is a Tower Pro Digital MG995R - different servos will require 
     #different pwm settings
 
-    import pigpio
+    from periphery import PWM
+    
+    #frequency and period
+    f = 50
+    T = 1/f
     
     TRANSMITTER_MIN_VAL = 352
     TRANSMITTER_MAX_VAL = 1796
@@ -62,36 +68,48 @@ def device_test(reader):
     YAW_CHANNEL = 1
     PITCH_CHANNEL = 2
     
-    YAW_PIN = 17
-    PITCH_PIN = 18
+    YAW_PIN = 11
+    PITCH_PIN = 13
+   
+    #yaw = GPIO("/sys/class/gpio/gpio396", YAW_PIN, "out")
+    #pitch = GPIO("/sys/class/gpio/gpio397", PITCH_PIN, "out")
     
-    reader.pi.set_mode(YAW_PIN, pigpio.OUTPUT)
-    reader.pi.set_mode(PITCH_PIN, pigpio.OUTPUT)   
-
-    reader.pi.set_PWM_frequency(YAW_PIN,50)
-    reader.pi.set_PWM_frequency(PITCH_PIN,50)
+    #reader.pi.set_mode(YAW_PIN, pigpio.OUTPUT)
+    #reader.pi.set_mode(PITCH_PIN, pigpio.OUTPUT)   
+    yaw = PWM(0, 9)
+    pitch = PWM(0, 10)
+    
+    #reader.pi.set_PWM_frequency(YAW_PIN,50)
+    #reader.pi.set_PWM_frequency(PITCH_PIN,50)
+    yaw.frequency = f
+    picth.frequency = f
     
     print('ctrl-c to leave device_test....')
     
     while(True):
         if reader.is_connected():
+            
+            yaw.enable()
+            pitch.enable()
+            
             latest_channel_data = reader.translate_latest_packet()
 
             cur_servo_val = latest_channel_data[YAW_CHANNEL-1]
             pwm = map_value(TRANSMITTER_MIN_VAL,TRANSMITTER_MAX_VAL,SERVO_MIN_VAL,SERVO_MAX_VAL, True,cur_servo_val)
-            reader.pi.set_servo_pulsewidth(YAW_PIN,pwm)
+            yaw.duty_cycle = pwm/T
 
             cur_servo_val = latest_channel_data[PITCH_CHANNEL-1]
             pwm = map_value(TRANSMITTER_MIN_VAL,TRANSMITTER_MAX_VAL,SERVO_MIN_VAL,SERVO_MAX_VAL, True,cur_servo_val)
-            reader.pi.set_servo_pulsewidth(PITCH_PIN,pwm)
+            pitch.duty_cycle = pwm/T
 
             
             
-#SBUS connected to pin 4
-DATA_PIN = 4
+#SBUS connected to pin 7
+DATA_PIN = 22
+path = "/sys/class/gpio/gpio409"
 
 if __name__=="__main__":
-    reader = read_sbus_from_GPIO.SbusReader(DATA_PIN)
+    reader = read_sbus_from_GPIO.SbusReader(path, DATA_PIN)
     reader.begin_listen()
     
     print('Begin Tests...')
