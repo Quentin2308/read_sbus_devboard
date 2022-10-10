@@ -82,7 +82,7 @@ def device_test(reader):
     #reader.pi.set_PWM_frequency(YAW_PIN,50)
     #reader.pi.set_PWM_frequency(PITCH_PIN,50)
     yaw.frequency = f
-    picth.frequency = f
+    pitch.frequency = f
     
     print('ctrl-c to leave device_test....')
     
