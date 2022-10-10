@@ -151,11 +151,13 @@ class SbusReader:
     
     def begin_listen(self):
         global _latest_complete_packet_timestamp
-        self.pi.callback(self.gpio_pin, pigpio.EITHER_EDGE, _on_change)
-        _latest_complete_packet_timestamp = self.pi.get_current_tick()
+        if self.GPIO.poll() : 
+            read_event()
+            _on_change() # acompleter
+            _latest_complete_packet_timestamp = read_event().timestamp
     
     def end_listen(self):
-        self.pi.stop()
+        self.GPIO.close()
     
     def translate_packet(self,packet):
         #ASSUMES packet has been sanity checked.
