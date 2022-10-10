@@ -25,9 +25,9 @@ def ping_test(reader):
         reader.end_listen()
         raise
 
-    print('Timing 5 seconds of packets....')
+    print('Timing 3 seconds of packets....')
     time_start = time.time()
-    while time.time() - time_start <=5:
+    while time.time() - time_start <=3:
         time.sleep(.01) # retrieve every 10ms
         times.append(reader.get_latest_packet_age())
     
@@ -68,8 +68,8 @@ def device_test(reader):
     reader.pi.set_mode(YAW_PIN, pigpio.OUTPUT)
     reader.pi.set_mode(PITCH_PIN, pigpio.OUTPUT)   
 
-    reader.pi.set_PWM_frequency(SERVO_PIN,50)
-    reader.pi.set_PWM_frequency(LED_BRIGHTNESS_PIN,100)
+    reader.pi.set_PWM_frequency(YAW_PIN,50)
+    reader.pi.set_PWM_frequency(PITCH_PIN,50)
     
     print('ctrl-c to leave device_test....')
     
@@ -84,10 +84,9 @@ def device_test(reader):
             cur_servo_val = latest_channel_data[PITCH_CHANNEL-1]
             pwm = map_value(TRANSMITTER_MIN_VAL,TRANSMITTER_MAX_VAL,SERVO_MIN_VAL,SERVO_MAX_VAL, True,cur_servo_val)
             reader.pi.set_servo_pulsewidth(PITCH_PIN,pwm)
-             
-  
-        
 
+            
+            
 #SBUS connected to pin 4
 DATA_PIN = 4
 
