@@ -148,7 +148,7 @@ class SbusReader:
         self.gpio_pin = gpio_pin #BCM pin
         #self.pi = pigpio.pi()
         self.GPIO = GPIO(path, gpio_pin, "in")
-        self.edge = "both"
+        self.edge = edge
     
     def begin_listen(self):
         global _latest_complete_packet_timestamp
