@@ -79,11 +79,11 @@ def device_test(reader):
 
             cur_servo_val = latest_channel_data[YAW_CHANNEL-1]
             pwm = map_value(TRANSMITTER_MIN_VAL,TRANSMITTER_MAX_VAL,SERVO_MIN_VAL,SERVO_MAX_VAL, True,cur_servo_val)
-            reader.pi.set_PWM_dutycycle(YAW_PIN,pwm)
+            reader.pi.set_servo_pulsewidth(YAW_PIN,pwm)
 
             cur_servo_val = latest_channel_data[PITCH_CHANNEL-1]
             pwm = map_value(TRANSMITTER_MIN_VAL,TRANSMITTER_MAX_VAL,SERVO_MIN_VAL,SERVO_MAX_VAL, True,cur_servo_val)
-            reader.pi.set_PWM_dutycycle(PITCH_PIN,pwm)
+            reader.pi.set_servo_pulsewidth(PITCH_PIN,pwm)
              
   
         
