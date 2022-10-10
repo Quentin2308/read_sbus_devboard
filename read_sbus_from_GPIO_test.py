@@ -107,9 +107,10 @@ def device_test(reader):
 #SBUS connected to pin 7
 DATA_PIN = 10
 path = "/dev/gpiochip0"
+edge = "both"
 
 if __name__=="__main__":
-    reader = read_sbus_from_GPIO.SbusReader(path, DATA_PIN)
+    reader = read_sbus_from_GPIO.SbusReader(path, DATA_PIN, edge)
     reader.begin_listen()
     
     print('Begin Tests...')
