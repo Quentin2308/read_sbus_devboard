@@ -206,7 +206,7 @@ class SbusReader:
     def get_latest_packet_age(self):
         #in milliseconds
         event = self.GPIO.read_event()
-        return int((envent.timestamp - _latest_complete_packet_timestamp)/1000)
+        return int((event.timestamp - _latest_complete_packet_timestamp)/1000)
     
     def is_connected(self):
         return _is_connected
