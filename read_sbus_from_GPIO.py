@@ -90,7 +90,7 @@ def _sanity_check_packet(packet):
     
     return ret_val
 
-def _on_change(gpio,level,tick):
+def _on_change(level,tick):
     #pigpio calls this method whenever it detects a level change
     global _last_tick, \
         _working_packet, \
@@ -152,9 +152,9 @@ class SbusReader:
     def begin_listen(self):
         global _latest_complete_packet_timestamp
         if self.GPIO.poll() : 
-            read_event()
-            _on_change() # acompleter
-            _latest_complete_packet_timestamp = read_event().timestamp
+            event = read_event()
+            _on_change(event.edge, event.timestamp) 
+            _latest_complete_packet_timestamp = event.timestamp
     
     def end_listen(self):
         self.GPIO.close()
