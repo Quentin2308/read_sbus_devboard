@@ -153,7 +153,7 @@ class SbusReader:
         global _latest_complete_packet_timestamp
         if self.GPIO.poll(timeout = 0.2) : 
             event = self.GPIO.read_event()
-            level = sel.GPIO.read()
+            level = self.GPIO.read()
             _on_change(level, event.timestamp) 
             _latest_complete_packet_timestamp = event.timestamp
     
