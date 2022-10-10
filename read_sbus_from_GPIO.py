@@ -1,7 +1,8 @@
-import pigpio
+from periphery import GPIO
 import bitarray as ba
 import bitarray.util as bau
 import time
+import pigpio
 
 #PACKET REFERENCE
 
@@ -143,10 +144,10 @@ def _on_change(gpio,level,tick):
 
 
 class SbusReader:
-    def __init__(self, gpio_pin):
+    def __init__(self, path, gpio_pin):
         self.gpio_pin = gpio_pin #BCM pin
-        self.pi = pigpio.pi()
-        self.pi.set_mode(gpio_pin, pigpio.INPUT)
+        #self.pi = pigpio.pi()
+        self.GPIO = GPIO(path, gpio_pin, "in")
     
     def begin_listen(self):
         global _latest_complete_packet_timestamp
