@@ -152,8 +152,9 @@ class SbusReader:
     def begin_listen(self):
         global _latest_complete_packet_timestamp
         if self.GPIO.poll() : 
-            event = read_event()
-            _on_change(event.edge, event.timestamp) 
+            event = self.GPIO.read_event()
+            level = sel.GPIO.read()
+            _on_change(level, event.timestamp) 
             _latest_complete_packet_timestamp = event.timestamp
     
     def end_listen(self):
@@ -204,7 +205,8 @@ class SbusReader:
     
     def get_latest_packet_age(self):
         #in milliseconds
-        return int((self.pi.get_current_tick() - _latest_complete_packet_timestamp)/1000)
+        event = self.GPIO.read_event()
+        return int((envent.timestamp - _latest_complete_packet_timestamp)/1000)
     
     def is_connected(self):
         return _is_connected
