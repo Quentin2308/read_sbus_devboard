@@ -124,7 +124,7 @@ if __name__=="__main__":
     reader.display_latest_packet()
     print('*******')
     
-    reader.display_latest_packet_curses()
+    #reader.display_latest_packet_curses()
 
     device_test(reader)
     
