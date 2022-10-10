@@ -54,56 +54,38 @@ def device_test(reader):
 
     import pigpio
     
-    TRANSMITTER_MIN_VAL = 172
-    TRANSMITTER_MAX_VAL = 1811
-    SERVO_MIN_VAL = 5
-    SERVO_MAX_VAL = 30
+    TRANSMITTER_MIN_VAL = 352
+    TRANSMITTER_MAX_VAL = 1796
+    SERVO_MIN_VAL = 500
+    SERVO_MAX_VAL = 2500
 
-    LED_MIN_VAL =0
-    LED_MAX_VAL = 200
-
-    SERVO_CHANNEL = 5
-    SERVO_PIN = 17
-
-    LED_ON_OFF_CHANNEL = 6
-    LED_ON_OFF_PIN = 26
-
-    LED_BRIGHTNESS_CHANNEL=1
-    LED_BRIGHTNESS_PIN = 13
-
-    LED_ON_OFF_CUTOFF = 500
-
+    YAW_CHANNEL = 1
+    PITCH_CHANNEL = 2
     
-    reader.pi.set_mode(SERVO_PIN, pigpio.OUTPUT)
-    reader.pi.set_mode(LED_ON_OFF_PIN, pigpio.OUTPUT)
-    reader.pi.set_mode(LED_BRIGHTNESS_PIN, pigpio.OUTPUT)
-   
+    YAW_PIN = 17
+    PITCH_PIN = 18
+    
+    reader.pi.set_mode(YAW_PIN, pigpio.OUTPUT)
+    reader.pi.set_mode(PITCH_PIN, pigpio.OUTPUT)   
 
     reader.pi.set_PWM_frequency(SERVO_PIN,50)
     reader.pi.set_PWM_frequency(LED_BRIGHTNESS_PIN,100)
     
     print('ctrl-c to leave device_test....')
-    try:
-        while(True):
-            if reader.is_connected():
-                latest_channel_data = reader.translate_latest_packet()
+    
+    while(True):
+        if reader.is_connected():
+            latest_channel_data = reader.translate_latest_packet()
 
-                cur_servo_val = latest_channel_data[SERVO_CHANNEL-1]
-                pwm = map_value(TRANSMITTER_MIN_VAL,TRANSMITTER_MAX_VAL,SERVO_MIN_VAL,SERVO_MAX_VAL, True,cur_servo_val)
-                reader.pi.set_PWM_dutycycle(SERVO_PIN,pwm)
+            cur_servo_val = latest_channel_data[YAW_CHANNEL-1]
+            pwm = map_value(TRANSMITTER_MIN_VAL,TRANSMITTER_MAX_VAL,SERVO_MIN_VAL,SERVO_MAX_VAL, True,cur_servo_val)
+            reader.pi.set_PWM_dutycycle(YAW_PIN,pwm)
 
-                cur_led_brightness_val = latest_channel_data[LED_BRIGHTNESS_CHANNEL-1]
-                pwm = map_value(TRANSMITTER_MIN_VAL,TRANSMITTER_MAX_VAL,LED_MIN_VAL,LED_MAX_VAL, False,cur_led_brightness_val)
-                reader.pi.set_PWM_dutycycle(LED_BRIGHTNESS_PIN,pwm)
-
-                if (latest_channel_data[LED_ON_OFF_CHANNEL-1] > LED_ON_OFF_CUTOFF):
-                    reader.pi.write(LED_ON_OFF_PIN,1)
-                else:
-                    reader.pi.write(LED_ON_OFF_PIN,0)
-    except KeyboardInterrupt:
-        reader.pi.write(LED_ON_OFF_PIN,0)
-        reader.pi.write(LED_BRIGHTNESS_PIN,0)
-        return
+            cur_servo_val = latest_channel_data[PITCH_CHANNEL-1]
+            pwm = map_value(TRANSMITTER_MIN_VAL,TRANSMITTER_MAX_VAL,SERVO_MIN_VAL,SERVO_MAX_VAL, True,cur_servo_val)
+            reader.pi.set_PWM_dutycycle(PITCH_PIN,pwm)
+             
+  
         
 
 #SBUS connected to pin 4
