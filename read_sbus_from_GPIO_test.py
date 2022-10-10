@@ -76,8 +76,8 @@ def device_test(reader):
     
     #reader.pi.set_mode(YAW_PIN, pigpio.OUTPUT)
     #reader.pi.set_mode(PITCH_PIN, pigpio.OUTPUT)   
-    yaw = PWM(0, 9)
-    pitch = PWM(0, 10)
+    yaw = PWM(0, 0)
+    pitch = PWM(0, 1)
     
     #reader.pi.set_PWM_frequency(YAW_PIN,50)
     #reader.pi.set_PWM_frequency(PITCH_PIN,50)
