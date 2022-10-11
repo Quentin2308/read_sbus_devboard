@@ -167,7 +167,8 @@ class SbusReader:
         
         def f():
             ret.put(self.GPIO.poll(timeout))
-            _on_change(level,tick)
+            if self.GPIO.poll(timeout):
+                _on_change(level,tick)
 
         thread = threading.Thread(target=f, daemon=True)
         thread.start()
