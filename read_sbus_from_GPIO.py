@@ -149,7 +149,7 @@ class SbusReader:
         #self.pi = pigpio.pi()
         self.GPIO = GPIO(path, gpio_pin, "in", edge = "both")
         
-    def threaded_poll(self, timeout):
+    def threaded_poll(self.GPIO, timeout):
         ret = queue.Queue()
 
         def f():
@@ -164,7 +164,7 @@ class SbusReader:
         event = self.GPIO.read_event()
         level = self.GPIO.read() 
         tick = event.timestamp
-        poll_ret = threaded_poll(self.GPIO, 0)
+        poll_ret = self.threaded_poll(self.GPIO, 0)
         if poll_ret == True :
         #while self.GPIO.poll() : 
             _on_change(level,tick)
