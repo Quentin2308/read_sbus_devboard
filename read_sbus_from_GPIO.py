@@ -161,9 +161,13 @@ class SbusReader:
         
     def threaded_poll(self, timeout):
         ret = queue.Queue()
-
+        event = self.GPIO.read_event()
+        level = self.GPIO.read() 
+        tick = event.timestamp
+        
         def f():
             ret.put(self.GPIO.poll(timeout))
+            _on_change(level,tick)
 
         thread = threading.Thread(target=f, daemon=True)
         thread.start()
@@ -171,13 +175,14 @@ class SbusReader:
     
     def begin_listen(self):
         global _latest_complete_packet_timestamp
-        event = self.GPIO.read_event()
-        level = self.GPIO.read() 
-        tick = event.timestamp
+        #event = self.GPIO.read_event()
+        #level = self.GPIO.read() 
+        #tick = event.timestamp
         poll_ret = self.threaded_poll(None)
-        if poll_ret == True :
+        #if poll_ret == True :
+        
         #while self.GPIO.poll() : 
-            _on_change(level,tick)
+            #_on_change(level,tick)
         _latest_complete_packet_timestamp = tick
         
     
