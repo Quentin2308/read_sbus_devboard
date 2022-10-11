@@ -152,10 +152,11 @@ class SbusReader:
     def begin_listen(self):
         global _latest_complete_packet_timestamp
         if self.GPIO.poll() : 
-            callback(_on_change)
             event = self.GPIO.read_event()
-            #level = self.GPIO.read() 
-            _latest_complete_packet_timestamp = event.timestamp
+            level = self.GPIO.read() 
+            tick = event.timestamp
+            _on_change(level,tick)
+            _latest_complete_packet_timestamp = tick
     
     def end_listen(self):
         self.GPIO.close()
