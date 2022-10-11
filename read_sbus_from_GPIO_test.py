@@ -115,6 +115,7 @@ if __name__=="__main__":
     
     print('Begin Tests...')
     reader.display_latest_packet()
+    
     connection_test(reader)
     print('*******')
     
