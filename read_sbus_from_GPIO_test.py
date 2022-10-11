@@ -105,7 +105,7 @@ def device_test(reader):
             
             
 #SBUS connected to pin 7
-DATA_PIN = 10
+DATA_PIN = 22
 path = "/dev/gpiochip0"
 
 
