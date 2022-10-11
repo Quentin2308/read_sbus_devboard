@@ -174,8 +174,8 @@ class SbusReader:
         event = self.GPIO.read_event()
         level = self.GPIO.read() 
         tick = event.timestamp
-        poll_ret = self.threaded_poll(0)
-        if poll_ret == True :
+        poll_ret = self.threaded_poll(None)
+        while poll_ret == True :
         #while self.GPIO.poll() : 
             _on_change(level,tick)
         _latest_complete_packet_timestamp = tick
