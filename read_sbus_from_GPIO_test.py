@@ -61,7 +61,7 @@ def device_test(reader):
     T = 1/f
     
     TRANSMITTER_MIN_VAL = 352
-    TRANSMITTER_MAX_VAL = (2047-352)*2
+    TRANSMITTER_MAX_VAL = 2047+(2047-352)
     SERVO_MIN_VAL = 500
     SERVO_MAX_VAL = 2500
 
@@ -119,6 +119,7 @@ if __name__=="__main__":
     connection_test(reader)
     print('*******')
     
+    reader.display_latest_packet()
     ping_test(reader)
     print('*******')
 
