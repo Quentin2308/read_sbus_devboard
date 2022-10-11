@@ -63,7 +63,7 @@ _working_packet = bau.zeros(_PACKET_LENGTH) #stores result as packet comes into 
 
 _latest_complete_packet = bau.zeros(_PACKET_LENGTH) #stores the last packet that the system recorded
 _latest_complete_packet_timestamp = 0 #stores tick at which the packet was recorded
-_is_connected = False #True if receiver is getting transmission, False if not connected
+_is_connected = True #True if receiver is getting transmission, False if not connected
 
 
 
