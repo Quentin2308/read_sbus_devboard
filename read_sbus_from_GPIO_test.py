@@ -96,11 +96,11 @@ def device_test(reader):
 
             cur_servo_val = latest_channel_data[YAW_CHANNEL-1]
             pwm = map_value(TRANSMITTER_MIN_VAL,TRANSMITTER_MAX_VAL,SERVO_MIN_VAL,SERVO_MAX_VAL, True,cur_servo_val)
-            yaw.duty_cycle = pwm/T
+            yaw.duty_cycle = pwm/(T*100)
 
             cur_servo_val = latest_channel_data[PITCH_CHANNEL-1]
             pwm = map_value(TRANSMITTER_MIN_VAL,TRANSMITTER_MAX_VAL,SERVO_MIN_VAL,SERVO_MAX_VAL, True,cur_servo_val)
-            pitch.duty_cycle = pwm/T
+            pitch.duty_cycle = pwm/(T*100)
 
             
             
