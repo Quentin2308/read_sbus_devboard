@@ -158,7 +158,7 @@ class SbusReader:
         self.GPIO = GPIO(path, gpio_pin, "in", edge = "both")
         
 
-        
+#essayer de mettre le thread dans ma main loop de l'autre fichier dans une boucle while en gros a la place du gebin listen
     def threaded_poll(self, timeout):
         ret = queue.Queue()
         event = self.GPIO.read_event()
