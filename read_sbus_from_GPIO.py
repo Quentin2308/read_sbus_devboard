@@ -155,7 +155,7 @@ class SbusReader:
     def __init__(self, path, gpio_pin):
         self.gpio_pin = gpio_pin #BCM pin
         #self.pi = pigpio.pi()
-        self.GPIO = GPIO(path, gpio_pin, "in", edge = "rising")
+        self.GPIO = GPIO(path, gpio_pin, "in", edge = "both")
         
 
         
@@ -174,7 +174,7 @@ class SbusReader:
         event = self.GPIO.read_event()
         level = self.GPIO.read() 
         tick = event.timestamp
-        poll_ret = self.threaded_poll(None)
+        poll_ret = self.threaded_poll(0)
         if poll_ret == True :
         #while self.GPIO.poll() : 
             _on_change(level,tick)
