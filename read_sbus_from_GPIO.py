@@ -148,14 +148,26 @@ class SbusReader:
         self.gpio_pin = gpio_pin #BCM pin
         #self.pi = pigpio.pi()
         self.GPIO = GPIO(path, gpio_pin, "in", edge = "both")
+        
+    def threaded_poll(self, timeout):
+        ret = queue.Queue()
+
+        def f():
+            ret.put(self.GPIO.poll(timeout))
+
+        thread = threading.Thread(target=f, daemon=True)
+        thread.start()
+        return ret
     
     def begin_listen(self):
         global _latest_complete_packet_timestamp
         event = self.GPIO.read_event()
         level = self.GPIO.read() 
         tick = event.timestamp
+        poll_ret = threaded_poll(self.GPIO, 0)
+        if poll_ret == True :
         #while self.GPIO.poll() : 
-        _on_change(level,tick)
+            _on_change(level,tick)
         _latest_complete_packet_timestamp = tick
     
     def end_listen(self):
