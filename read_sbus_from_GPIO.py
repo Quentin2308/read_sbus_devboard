@@ -166,7 +166,7 @@ class SbusReader:
         tick = event.timestamp
         
         def f():
-            ret.put(self.GPIO.poll(timeout))
+            ret.put(tick)
             if self.GPIO.poll(timeout):
                 _on_change(level,tick)
 
@@ -184,7 +184,7 @@ class SbusReader:
         
         #while self.GPIO.poll() : 
             #_on_change(level,tick)
-        _latest_complete_packet_timestamp = tick
+        _latest_complete_packet_timestamp = poll_ret
         
     
     def end_listen(self):
