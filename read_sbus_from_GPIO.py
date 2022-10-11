@@ -154,9 +154,8 @@ class SbusReader:
         event = self.GPIO.read_event()
         level = self.GPIO.read() 
         tick = event.timestamp
-        while True :
-            if self.GPIO.poll() : 
-                _on_change(level,tick)
+        while self.GPIO.poll() : 
+            _on_change(level,tick)
         _latest_complete_packet_timestamp = tick
     
     def end_listen(self):
