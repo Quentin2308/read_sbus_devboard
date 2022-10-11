@@ -3,6 +3,14 @@ import bitarray as ba
 import bitarray.util as bau
 import time
 import pigpio
+import sys
+import threading
+import time
+
+if sys.version_info[0] == 3:
+    import queue
+else:
+    import Queue as queue
 
 #PACKET REFERENCE
 
