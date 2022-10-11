@@ -157,10 +157,7 @@ class SbusReader:
         self.pi = pigpio.pi()
         self.GPIO = GPIO(path, gpio_pin, "in", edge = "none")
         
-    def begin_listen2(self):    
-        global _latest_complete_packet_timestamp
-        self.pi.callback(self.gpio_pin, pigpio.EITHER_EDGE, _on_change)
-        _latest_complete_packet_timestamp = self.pi.get_current_tick()
+
         
     def threaded_poll(self, timeout):
         ret = queue.Queue()
