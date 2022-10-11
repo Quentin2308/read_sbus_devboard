@@ -90,7 +90,7 @@ def _sanity_check_packet(packet):
     
     return ret_val
 
-def _on_change(gpio,level,tick):
+def _on_change(level,tick):
     #pigpio calls this method whenever it detects a level change
     global _last_tick, \
         _working_packet, \
