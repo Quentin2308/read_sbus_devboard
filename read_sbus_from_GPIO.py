@@ -151,7 +151,7 @@ class SbusReader:
     
     def begin_listen(self):
         global _latest_complete_packet_timestamp
-        while self.GPIO.poll(timeout = 0.1) : 
+        while self.GPIO.poll() : 
             event = self.GPIO.read_event()
             level = self.GPIO.read()
             _on_change(level, event.timestamp) 
