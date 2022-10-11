@@ -154,7 +154,7 @@ def _on_change(level,tick):
 class SbusReader:
     def __init__(self, path, gpio_pin):
         self.gpio_pin = gpio_pin #BCM pin
-        self.pi = pigpio.pi()
+        #self.pi = pigpio.pi()
         self.GPIO = GPIO(path, gpio_pin, "in", edge = "none")
         
 
