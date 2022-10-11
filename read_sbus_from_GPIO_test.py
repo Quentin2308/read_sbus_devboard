@@ -111,7 +111,7 @@ path = "/dev/gpiochip0"
 
 if __name__=="__main__":
     reader = read_sbus_from_GPIO.SbusReader(path, DATA_PIN)
-    reader.begin_listen2()
+    reader.begin_listen()
     
     print('Begin Tests...')
     reader.display_latest_packet()
