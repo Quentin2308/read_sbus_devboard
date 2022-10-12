@@ -4,34 +4,34 @@ from statistics import mean
 from periphery import GPIO
 
 
-def connection_test(reader):
+def connection_test(m):
     print('Waiting for connection...')
     times = []
     try:
-        while( not reader.is_connected()):
+        while( not m.is_connected()):
             time.sleep(.2)
     except KeyboardInterrupt:
-        reader.end_listen()
+        m.end_listen()
         raise
 
     print('Connection Established.')
 
 
-def ping_test(reader):
+def ping_test(m):
     print('Waiting for connection...')
     times = []
     try:
-        while( not reader.is_connected()):
+        while( not m.is_connected()):
             time.sleep(.2)
     except KeyboardInterrupt:
-        reader.end_listen()
+        m.end_listen()
         raise
 
     print('Timing 3 seconds of packets....')
     time_start = time.time()
     while time.time() - time_start <=3:
         time.sleep(.01) # retrieve every 10ms
-        times.append(reader.get_latest_packet_age())
+        times.append(m.get_latest_packet_age())
     
     print(f'Average Delay (ms): {mean(times)}, Max Delay (ms): {max(times)}')
 
@@ -47,7 +47,7 @@ def map_value(min_input,max_input,min_output,max_output,invert_mapping,input):
     return new_val
      
 
-def device_test(reader):
+def device_test(m):
     #demonstrates functionality of library on a servo and two leds connected to PI
     #on GPIOs specified below.
 
@@ -87,12 +87,12 @@ def device_test(reader):
     print('ctrl-c to leave device_test....')
     
     while(True):
-        if reader.is_connected():
+        if m.is_connected():
             
             yaw.enable()
             pitch.enable()
             
-            latest_channel_data = reader.translate_latest_packet()
+            latest_channel_data = m.translate_latest_packet()
 
             cur_servo_val = latest_channel_data[YAW_CHANNEL-1]
             pwm = map_value(TRANSMITTER_MIN_VAL,TRANSMITTER_MAX_VAL,SERVO_MIN_VAL,SERVO_MAX_VAL, True,cur_servo_val)
@@ -107,28 +107,29 @@ def device_test(reader):
 #SBUS connected to pin 13
 DATA_PIN = 22
 path = "/dev/gpiochip0"
-
+timeout = None
 
 if __name__=="__main__":
-    reader = read_sbus_from_GPIO.SbusReader(path, DATA_PIN)
-    reader.begin_listen()
+    
+    m = MonThread(path, DATA_PIN, timeout)
+    m.start()
     
     print('Begin Tests...')
     #reader.display_latest_packet()
     
-    connection_test(reader)
+    connection_test(m)
     print('*******')
     
-    reader.display_latest_packet()
-    ping_test(reader)
+    m.display_latest_packet()
+    ping_test(m)
     print('*******')
 
-    reader.display_latest_packet()
+    m.display_latest_packet()
     print('*******')
     
     #reader.display_latest_packet_curses()
 
-    device_test(reader)
+    device_test(m)
     
     print('End Tests...')
-    reader.end_listen()
+    m.end_listen()
