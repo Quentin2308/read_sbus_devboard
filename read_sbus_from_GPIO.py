@@ -7,11 +7,6 @@ import sys
 import threading
 import time
 
-if sys.version_info[0] == 3:
-    import queue
-else:
-    import Queue as queue
-
 #PACKET REFERENCE
 
 #  UART packet          UART packet 2
@@ -64,7 +59,7 @@ _working_packet = bau.zeros(_PACKET_LENGTH) #stores result as packet comes into 
 _latest_complete_packet = bau.zeros(_PACKET_LENGTH) #stores the last packet that the system recorded
 _latest_complete_packet_timestamp = 0 #stores tick at which the packet was recorded
 _is_connected = False #True if receiver is getting transmission, False if not connected
-
+port_closed = False
 
 
 def _sanity_check_packet(packet):
@@ -153,19 +148,28 @@ def _on_change(level,tick):
     
 class MonThread (threading.Thread):
     def __init__(self, path, gpio_pin, timeout):
+        global _latest_complete_packet_timestamp
         threading.Thread.__init__(self)
         self.GPIO = GPIO(path, gpio_pin, "in", edge = "both")
-    
-    def run(self):
-        global _latest_complete_packet_timestamp
         event = self.GPIO.read_event()
-        level = self.GPIO.read() 
-        tick = event.timestamp
-        if self.GPIO.poll(self.timeout):
-            _on_change(level,tick)
-        _latest_complete_packet_timestamp = tick
+        _latest_complete_packet_timestamp = event[1]
+        
+    def run(self):
+        while not port_closed :
+            level = 2
+            if self.GPIO.poll(self.timeout):
+                event = self.GPIO.read_event()
+                edge = event[0]
+                tick = event[1]
+                if edge == "falling" :
+                    level = 0
+                else :
+                    level = 1
+                _on_change(level,tick)
+            
         
     def end_listen(self):
+        port_closed = True
         self.GPIO.close()
     
     def translate_packet(self,packet):
@@ -214,7 +218,7 @@ class MonThread (threading.Thread):
     def get_latest_packet_age(self):
         #in milliseconds
         event = self.GPIO.read_event()
-        return int((event.timestamp - _latest_complete_packet_timestamp)/1000)
+        return int((event[1] - _latest_complete_packet_timestamp)/1000)
     
     def is_connected(self):
         return _is_connected
