@@ -152,16 +152,16 @@ class MonThread (threading.Thread):
         threading.Thread.__init__(self)
         self.GPIO = GPIO(path, gpio_pin, "in", edge = "rising")
         self.timeout = timeout
-        event = self.GPIO.read_event()
-        _latest_complete_packet_timestamp = event[1]
+        self.event = self.GPIO.read_event() # je viens de modifier
+        _latest_complete_packet_timestamp = self.event[1]
         
     def run(self):
         while not port_closed :
             level = 2
             if self.GPIO.poll(self.timeout): 
-                event = self.GPIO.read_event()
-                edge = event[0]
-                tick = event[1]
+                #event = sel.GPIO.read_event()
+                edge = self.event[0]
+                tick = self.event[1]
                 if edge == "falling" :
                     level = 0
                 else :
