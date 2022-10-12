@@ -100,10 +100,8 @@ path = "/dev/gpiochip0"
 timeout = None
 
 if __name__=="__main__":
-    
-    import read_sbus_from_GPIO
 
-    m = MonThread(path, DATA_PIN, timeout)
+    m = read_sbus_from_GPIO.MonThread(path, DATA_PIN, timeout)
     m.start()
     
     print('Begin Tests...')
