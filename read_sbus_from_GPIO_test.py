@@ -67,20 +67,10 @@ def device_test(m):
 
     YAW_CHANNEL = 1
     PITCH_CHANNEL = 2
-    
-    YAW_PIN = 11
-    PITCH_PIN = 13
-   
-    #yaw = GPIO("/sys/class/gpio/gpio396", YAW_PIN, "out")
-    #pitch = GPIO("/sys/class/gpio/gpio397", PITCH_PIN, "out")
-    
-    #reader.pi.set_mode(YAW_PIN, pigpio.OUTPUT)
-    #reader.pi.set_mode(PITCH_PIN, pigpio.OUTPUT)   
+  
     yaw = PWM(0, 0)
     pitch = PWM(0, 1)
-    
-    #reader.pi.set_PWM_frequency(YAW_PIN,50)
-    #reader.pi.set_PWM_frequency(PITCH_PIN,50)
+   
     yaw.frequency = f
     pitch.frequency = f
     
@@ -96,11 +86,11 @@ def device_test(m):
 
             cur_servo_val = latest_channel_data[YAW_CHANNEL-1]
             pwm = map_value(TRANSMITTER_MIN_VAL,TRANSMITTER_MAX_VAL,SERVO_MIN_VAL,SERVO_MAX_VAL, True,cur_servo_val)
-            yaw.duty_cycle = pwm/(T*100)
+            yaw.duty_cycle = (pwm*(10**(-6)))/T
 
             cur_servo_val = latest_channel_data[PITCH_CHANNEL-1]
             pwm = map_value(TRANSMITTER_MIN_VAL,TRANSMITTER_MAX_VAL,SERVO_MIN_VAL,SERVO_MAX_VAL, True,cur_servo_val)
-            pitch.duty_cycle = pwm/(T*100)
+            pitch.duty_cycle = (pwm*10(**(-6)))/T
 
             
             
@@ -126,8 +116,6 @@ if __name__=="__main__":
 
     m.display_latest_packet()
     print('*******')
-    
-    #reader.display_latest_packet_curses()
 
     device_test(m)
     
