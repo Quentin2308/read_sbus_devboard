@@ -97,7 +97,7 @@ def device_test(m):
 #SBUS connected to pin 13
 DATA_PIN = 22
 path = "/dev/gpiochip0"
-timeout = None
+timeout = 0 #non-blocking poll
 
 if __name__=="__main__":
 
