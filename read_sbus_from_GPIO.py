@@ -148,18 +148,21 @@ def _on_change(level,tick):
     
 class MonThread (threading.Thread):
     def __init__(self, path, gpio_pin):
-        global _latest_complete_packet_timestamp
+        #global _latest_complete_packet_timestamp
         threading.Thread.__init__(self)
-        self.GPIO = GPIO(path, gpio_pin, "in", edge = "both")
-        #self.timeout = timeout
-        event = self.GPIO.read_event() 
-        _latest_complete_packet_timestamp = event[1]
+        #self.GPIO = GPIO(path, gpio_pin, "in", edge = "both")
+        #event = self.GPIO.read_event() 
+        #_latest_complete_packet_timestamp = event[1]
         
     def run(self):
+        global _latest_complete_packet_timestamp
+        GPIO = GPIO("/dev/gpiochip0", 22, "in", edge = "both")
+        event = GPIO.read_event()
+        _latest_complete_packet_timestamp = event[1]
         while not port_closed :
             level = 2
             if self.GPIO.poll(0): 
-                read = self.GPIO.read_event()
+                read = GPIO.read_event()
                 edge = read[0]
                 tick = read[1]
                 if edge == "falling" :
