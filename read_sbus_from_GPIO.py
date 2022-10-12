@@ -147,7 +147,7 @@ def _on_change(level,tick):
 
     
 class MonThread (threading.Thread):
-    def __init__(self, path, gpio_pin):
+    def __init__(self):
         #global _latest_complete_packet_timestamp
         threading.Thread.__init__(self)
         #self.GPIO = GPIO(path, gpio_pin, "in", edge = "both")
