@@ -150,7 +150,7 @@ class MonThread (threading.Thread):
     def __init__(self, path, gpio_pin, timeout):
         global _latest_complete_packet_timestamp
         threading.Thread.__init__(self)
-        self.GPIO = GPIO(path, gpio_pin, "in", edge = "none")
+        self.GPIO = GPIO(path, gpio_pin, "in", edge = "rising")
         self.timeout = timeout
         event = self.GPIO.read_event()
         _latest_complete_packet_timestamp = event[1]
