@@ -150,7 +150,21 @@ def _on_change(level,tick):
     #start timing to interpret next bit
     _last_tick = tick
 
-
+    
+class MonThread (threading.Thread):
+    def __init__(self, path, gpio_pin, timeout):
+        threading.Thread.__init__(self)
+        self.GPIO = GPIO(path, gpio_pin, "in", edge = "both")
+    
+    def run(self):
+        global _latest_complete_packet_timestamp
+        event = self.GPIO.read_event()
+        level = self.GPIO.read() 
+        tick = event.timestamp
+        if self.GPIO.poll(self.timeout):
+            _on_change(level,tick)
+        _latest_complete_packet_timestamp = tick
+        
 class SbusReader:
     def __init__(self, path, gpio_pin):
         self.gpio_pin = gpio_pin #BCM pin
