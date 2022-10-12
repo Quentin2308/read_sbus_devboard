@@ -158,7 +158,7 @@ class MonThread (threading.Thread):
     def run(self):
         while not port_closed :
             level = 2
-            if self.GPIO.poll(None): 
+            if self.GPIO.poll(0): 
                 read = self.GPIO.read_event()
                 edge = read[0]
                 tick = read[1]
