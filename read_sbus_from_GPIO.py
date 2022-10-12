@@ -147,18 +147,18 @@ def _on_change(level,tick):
 
     
 class MonThread (threading.Thread):
-    def __init__(self, path, gpio_pin, timeout):
+    def __init__(self, path, gpio_pin):
         global _latest_complete_packet_timestamp
         threading.Thread.__init__(self)
         self.GPIO = GPIO(path, gpio_pin, "in", edge = "rising")
-        self.timeout = timeout
+        #self.timeout = timeout
         self.event = self.GPIO.read_event() # je viens de modifier
         _latest_complete_packet_timestamp = self.event[1]
         
     def run(self):
         while not port_closed :
             level = 2
-            if self.GPIO.poll(self.timeout): 
+            if self.GPIO.poll(timeout = None): 
                 #event = sel.GPIO.read_event()
                 edge = self.event[0]
                 tick = self.event[1]
