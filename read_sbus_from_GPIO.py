@@ -174,7 +174,9 @@ class MonThread (threading.Thread):
         
     def end_listen(self):
         port_closed = True
-        self.GPIO.close()
+        #self.GPIO.close()
+        gpio = GPIO("/dev/gpiochip0", 22, "in", edge = "both")
+        gpio.close()
     
     def translate_packet(self,packet):
         #ASSUMES packet has been sanity checked.
