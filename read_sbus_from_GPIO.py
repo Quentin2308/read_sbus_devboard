@@ -165,42 +165,6 @@ class MonThread (threading.Thread):
             _on_change(level,tick)
         _latest_complete_packet_timestamp = tick
         
-class SbusReader:
-    def __init__(self, path, gpio_pin):
-        self.gpio_pin = gpio_pin #BCM pin
-        #self.pi = pigpio.pi()
-        self.GPIO = GPIO(path, gpio_pin, "in", edge = "both")
-        
-
-#essayer de mettre le thread dans ma main loop de l'autre fichier dans une boucle while en gros a la place du gebin listen
-    def threaded_poll(self, timeout):
-        ret = queue.Queue()
-        event = self.GPIO.read_event()
-        level = self.GPIO.read() 
-        tick = event.timestamp
-        
-        def f():
-            ret.put(tick)
-            if self.GPIO.poll(timeout):
-                _on_change(level,tick)
-
-        thread = threading.Thread(target=f, daemon=True)
-        thread.start()
-        return ret
-    
-    def begin_listen(self):
-        global _latest_complete_packet_timestamp
-        #event = self.GPIO.read_event()
-        #level = self.GPIO.read() 
-        #tick = event.timestamp
-        poll_ret = self.threaded_poll(None)
-        #if poll_ret == True :
-        
-        #while self.GPIO.poll() : 
-            #_on_change(level,tick)
-        _latest_complete_packet_timestamp = poll_ret
-        
-    
     def end_listen(self):
         self.GPIO.close()
     
