@@ -102,6 +102,7 @@ timeout = 0.01 #non-blocking poll
 if __name__=="__main__":
 
     m = read_sbus_from_GPIO.MonThread()
+    
     m.start()
     
     print('Begin Tests...')
