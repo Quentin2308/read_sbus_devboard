@@ -103,13 +103,14 @@ def _on_change(level,tick):
         _is_connected
 
     time_elapsed = tick - _last_tick
-
+    print (time_elapsed + "time elapsed avant les if")
     if time_elapsed < 0:
         #the current tick wraps around once it exceeds 32-bit unsigned or 4294967295.
         #PIGPIO docs says this happens about once every 71 minutes
         #handle this case
         time_elapsed = 4294967295 - _last_tick + tick
-
+        print("time_elapsed < 0" + time elapsed )
+        
     if time_elapsed >= _PACKET_BOUNDRY_TIME:
         #if we are here then this method was triggered by the first "one" of this new packet
         #and we have just completed a frame boundry
@@ -211,7 +212,7 @@ class MonThread (threading.Thread):
         channel_val_list = self.translate_latest_packet()
         for i,val in enumerate(channel_val_list):
             print(f'Channel #{i+1}: {val}')
-        print(f'Packet Age(milliseconds): {self.get_latest_packet_age()}')
+        print(f'Packet Age(milliseconds): {self.get_latest_packet_age()*(10**3)}')
         
         transmission_status = ''
         if(_is_connected):
