@@ -213,7 +213,7 @@ class MonThread (threading.Thread):
         channel_val_list = self.translate_latest_packet()
         for i,val in enumerate(channel_val_list):
             print(f'Channel #{i+1}: {val}')
-        print(f'Packet Age(milliseconds): {self.get_latest_packet_age()/(10**3)}')
+        print(f'Packet Age(milliseconds): {self.get_latest_packet_age()}')
         
         transmission_status = ''
         if(_is_connected):
