@@ -164,7 +164,7 @@ class MonThread (threading.Thread):
                 edge = read[0]
                 tick = read[1]
                 #tick = self.get_time()
-                if edge = "rising" :
+                if edge == "rising" :
                     level = 1
                 else :
                     level = 0
