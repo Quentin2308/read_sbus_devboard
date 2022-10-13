@@ -9,7 +9,7 @@ def connection_test(m):
     times = []
     try:
         while( not m.is_connected()):
-            time.sleep(.2)
+            time.sleep(.4)
     except KeyboardInterrupt:
         m.end_listen()
         raise
