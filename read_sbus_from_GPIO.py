@@ -103,13 +103,13 @@ def _on_change(level,tick):
         _is_connected
 
     time_elapsed = tick - _last_tick
-    print (time_elapsed + "time elapsed avant les if")
+    print (time_elapsed , "time elapsed avant les if")
     if time_elapsed < 0:
         #the current tick wraps around once it exceeds 32-bit unsigned or 4294967295.
         #PIGPIO docs says this happens about once every 71 minutes
         #handle this case
         time_elapsed = 4294967295 - _last_tick + tick
-        print("time_elapsed < 0" + time elapsed )
+        print("time_elapsed < 0" , time_elapsed )
         
     if time_elapsed >= _PACKET_BOUNDRY_TIME:
         #if we are here then this method was triggered by the first "one" of this new packet
