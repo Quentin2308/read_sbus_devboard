@@ -159,7 +159,7 @@ class MonThread (threading.Thread):
         #gpio = GPIO("/dev/gpiochip0", 22, "in", edge = "both")
         while not port_closed :
             level = 2
-            if self.GPIO.poll(0): 
+            if self.GPIO.poll(None): 
                 read = self.GPIO.read()
                 #edge = read[0]
                 #tick = read[1]
