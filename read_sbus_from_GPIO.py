@@ -116,6 +116,7 @@ def _on_change(level,tick):
         #and we have just completed a frame boundry
         
         if (_sanity_check_packet(_working_packet)[0]):
+            print(_sanity_check_packet(_working_packet))
             #only set _latest_complete_packet if it passes sanity check,
             #otherwise leave old value there
             _latest_complete_packet, _working_packet = _working_packet, _latest_complete_packet
