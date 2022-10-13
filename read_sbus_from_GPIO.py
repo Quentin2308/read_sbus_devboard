@@ -169,6 +169,7 @@ class MonThread (threading.Thread):
                 else :
                     level = 0
                 _on_change(level,tick)
+        gpio.close()
             
     def get_time(self):
         return time.clock_gettime_ns(time.CLOCK_BOOTTIME)*(10**3)
@@ -176,7 +177,6 @@ class MonThread (threading.Thread):
     def end_listen(self):
         port_closed = True
         #self.GPIO.close()
-        GPIO("/dev/gpiochip0", 22, "in", edge = "both").close()
     
     def translate_packet(self,packet):
         #ASSUMES packet has been sanity checked.
