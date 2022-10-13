@@ -164,7 +164,7 @@ class MonThread (threading.Thread):
             if gpio.poll(None): 
                 read = gpio.read_event()
                 edge = read[0]
-                tick = read[1]*(10**3)
+                tick = read[1]/(10**3)
                 #tick = self.get_time()
                 if edge == "rising" :
                     level = 1
@@ -174,7 +174,7 @@ class MonThread (threading.Thread):
         gpio.close()
             
     def get_time(self):
-        return time.clock_gettime_ns(time.CLOCK_BOOTTIME)*(10**3)
+        return time.clock_gettime_ns(time.CLOCK_BOOTTIME)/(10**3)
     
     def end_listen(self):
         port_closed = True
@@ -213,7 +213,7 @@ class MonThread (threading.Thread):
         channel_val_list = self.translate_latest_packet()
         for i,val in enumerate(channel_val_list):
             print(f'Channel #{i+1}: {val}')
-        print(f'Packet Age(milliseconds): {self.get_latest_packet_age()*(10**3)}')
+        print(f'Packet Age(milliseconds): {self.get_latest_packet_age()/(10**3)}')
         
         transmission_status = ''
         if(_is_connected):
