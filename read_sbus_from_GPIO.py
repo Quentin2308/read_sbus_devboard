@@ -160,7 +160,7 @@ class MonThread (threading.Thread):
         while not port_closed :
             level = 2
             if gpio.poll(0): 
-                edge = gpio.read_event()
+                read = gpio.read_event()
                 edge = read[0]
                 tick = read[1]
                 #tick = self.get_time()
