@@ -58,7 +58,7 @@ _working_packet = bau.zeros(_PACKET_LENGTH) #stores result as packet comes into 
 
 _latest_complete_packet = bau.zeros(_PACKET_LENGTH) #stores the last packet that the system recorded
 _latest_complete_packet_timestamp = 0 #stores tick at which the packet was recorded
-_is_connected = True #True if receiver is getting transmission, False if not connected
+_is_connected = False #True if receiver is getting transmission, False if not connected
 port_closed = False
 
 
@@ -191,7 +191,7 @@ class MonThread (threading.Thread):
         #skip first frame, it is an SBUS start frame
         for packet_bits_ptr in range (_UART_FRAME_LENGTH,_UART_FRAME_LENGTH+22*_UART_FRAME_LENGTH,_UART_FRAME_LENGTH):
             #extract from UART frame and invert each byte
-            channel_bits[channel_bits_ptr:channel_bits_ptr+8]=~packet[packet_bits_ptr+1:packet_bits_ptr+9]
+            channel_bits[channel_bits_ptr:channel_bits_ptr+8]=packet[packet_bits_ptr+1:packet_bits_ptr+9]
             channel_bits_ptr += 8
 
         ret_list = []
