@@ -150,17 +150,17 @@ class MonThread (threading.Thread):
     def __init__(self, path, gpio_pin):
         global _latest_complete_packet_timestamp
         threading.Thread.__init__(self)
-        self.GPIO = GPIO(path, gpio_pin, "in", edge = "both")
+        #self.GPIO = GPIO(path, gpio_pin, "in", edge = "both")
         #event = self.GPIO.read_event() 
         _latest_complete_packet_timestamp = self.get_time()
 
         
     def run(self):
-        #gpio = GPIO("/dev/gpiochip0", 22, "in", edge = "both")
+        gpio = GPIO("/dev/gpiochip0", 22, "in", edge = "both")
         while not port_closed :
             level = 2
-            if self.GPIO.poll(None): 
-                read = self.GPIO.read()
+            if gpio.poll(None): 
+                read = gpio.read()
                 #edge = read[0]
                 #tick = read[1]
                 tick = self.get_time()
@@ -175,7 +175,8 @@ class MonThread (threading.Thread):
     
     def end_listen(self):
         port_closed = True
-        self.GPIO.close()
+        #self.GPIO.close()
+        GPIO("/dev/gpiochip0", 22, "in", edge = "both").close()
     
     def translate_packet(self,packet):
         #ASSUMES packet has been sanity checked.
