@@ -160,11 +160,11 @@ class MonThread (threading.Thread):
         while not port_closed :
             level = 2
             if gpio.poll(0): 
-                read = gpio.read()
-                #edge = read[0]
-                #tick = read[1]
-                tick = self.get_time()
-                if read :
+                edge = gpio.read_event()
+                edge = read[0]
+                tick = read[1]
+                #tick = self.get_time()
+                if edge = "rising" :
                     level = 1
                 else :
                     level = 0
