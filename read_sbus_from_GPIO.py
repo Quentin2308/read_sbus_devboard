@@ -151,8 +151,8 @@ class MonThread (threading.Thread):
         global _latest_complete_packet_timestamp
         threading.Thread.__init__(self)
         self.GPIO = GPIO(path, gpio_pin, "in", edge = "both")
-        event = self.GPIO.read_event() 
-        _latest_complete_packet_timestamp = event[1]
+        #event = self.GPIO.read_event() 
+        _latest_complete_packet_timestamp = self.get_time()
 
         
     def run(self):
@@ -160,16 +160,19 @@ class MonThread (threading.Thread):
         while not port_closed :
             level = 2
             if self.GPIO.poll(0): 
-                read = self.GPIO.read_event()
-                edge = read[0]
-                tick = read[1]
-                if edge == "falling" :
-                    level = 0
-                else :
+                read = self.GPIO.read()
+                #edge = read[0]
+                #tick = read[1]
+                tick = self.get_time()
+                if read :
                     level = 1
+                else :
+                    level = 0
                 _on_change(level,tick)
             
-        
+    def get_time(self):
+        return time.clock_gettime_ns(time.CLOCK_BOOTTIME)*(10**3)
+    
     def end_listen(self):
         port_closed = True
         self.GPIO.close()
@@ -219,8 +222,8 @@ class MonThread (threading.Thread):
     
     def get_latest_packet_age(self):
         #in milliseconds
-        event = self.GPIO.read_event()
-        return int((event[1] - _latest_complete_packet_timestamp)/1000)
+        #event = self.GPIO.read_event()
+        return int((self.get_time() - _latest_complete_packet_timestamp)/1000)
     
     def is_connected(self):
         return _is_connected
