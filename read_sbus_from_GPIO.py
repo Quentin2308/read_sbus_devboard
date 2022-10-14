@@ -171,7 +171,7 @@ class MonThread (threading.Thread):
                 #edge = read[0]
                 #tick = read[1]/(10**3)
                 tick = self.get_time()
-                if read" :
+                if read :
                     level = 1
                 else :
                     level = 0
