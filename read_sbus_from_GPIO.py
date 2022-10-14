@@ -166,7 +166,8 @@ class MonThread (threading.Thread):
         while not port_closed :
             #level = 2
             #_latest_complete_packet_timestamp = self.get_time()
-            if gpio.poll(None): 
+            time.sleep(0.1)
+            if gpio.poll(0): 
                 read = gpio.read_event()
                 edge = read[0]
                 tick = read[1]/(10**3)
