@@ -39,7 +39,7 @@ import time
 
 
 #minimum time between packets in microseconds (6000 microseconds is a typical gap, but the code looks for 5000 or *more*, in case there is some timing error)
-_PACKET_BOUNDRY_TIME = 1000 
+_PACKET_BOUNDRY_TIME = 5000 
 
 #in bits
 _PACKET_LENGTH = 298
@@ -167,11 +167,11 @@ class MonThread (threading.Thread):
             #level = 2
             #_latest_complete_packet_timestamp = self.get_time()
             if gpio.poll(0): 
-                read = gpio.read()
-                #edge = read[0]
-                #tick = read[1]/(10**3)
-                tick = self.get_time()
-                if read :
+                read = gpio.read_event()
+                edge = read[0]
+                tick = read[1]/(10**3)
+                #tick = self.get_time()
+                if read[0] == "rising" :
                     level = 1
                 else :
                     level = 0
