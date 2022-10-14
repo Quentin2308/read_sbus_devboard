@@ -39,7 +39,7 @@ import time
 
 
 #minimum time between packets in microseconds (6000 microseconds is a typical gap, but the code looks for 5000 or *more*, in case there is some timing error)
-_PACKET_BOUNDRY_TIME = 5000 
+_PACKET_BOUNDRY_TIME = 1000 
 
 #in bits
 _PACKET_LENGTH = 298
