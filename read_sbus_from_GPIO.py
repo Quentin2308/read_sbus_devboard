@@ -136,7 +136,7 @@ def _on_change(level,tick):
         _last_tick = tick 
         return
     
-    num_bits = round((time_elapsed)/0.1) #10 microseconds per data bit, so number of bits since last state change is time difference/10
+    num_bits = round((time_elapsed)/10) #10 microseconds per data bit, so number of bits since last state change is time difference/10
     bit_val = bool(-level+1) #enter the level *before* this state change which is the inverse of current change.
     
     #record number of bits at the level since the state changed
@@ -167,11 +167,11 @@ class MonThread (threading.Thread):
             #level = 2
             #_latest_complete_packet_timestamp = self.get_time()
             if gpio.poll(0): 
-                read = gpio.read_event()
-                edge = read[0]
-                tick = read[1]/(10**3)
-                #tick = self.get_time()
-                if read[0] == "rising" :
+                read = gpio.read()
+                #edge = read[0]
+                #tick = read[1]/(10**3)
+                tick = self.get_time()
+                if read" :
                     level = 1
                 else :
                     level = 0
