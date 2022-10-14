@@ -110,11 +110,13 @@ def _on_change(level,tick):
         #handle this case
         time_elapsed = 4294967295 - _last_tick + tick
         
-        
+ 
     if time_elapsed >= _PACKET_BOUNDRY_TIME:
         #if we are here then this method was triggered by the first "one" of this new packet
         #and we have just completed a frame boundry
-        #print(_sanity_check_packet(_working_packet))
+        print ( "time_elapsed = " , time_elapsed)
+        print(_sanity_check_packet(_working_packet))
+        
         if (_sanity_check_packet(_working_packet)[0]):
             
             #only set _latest_complete_packet if it passes sanity check,
