@@ -171,13 +171,13 @@ class MonThread (threading.Thread):
                 read = gpio.read_event()
                 edge = read[0]
                 tick = read[1]/(10**3)
-                print(edge, gpio.read())
+                #print(edge, gpio.read())
                 #tick = self.get_time()
                 if read[0] == "rising" :
                     level = 1
                 else :
                     level = 0
-                _on_change(level,tick)
+                _on_change(gpio.read(),tick)
             #_latest_complete_packet_timestamp = self.get_time()
         gpio.close()
             
