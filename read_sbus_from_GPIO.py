@@ -162,7 +162,7 @@ class MonThread (threading.Thread):
     def run(self):
         global _latest_complete_packet_timestamp
         gpio = GPIO("/dev/gpiochip0", 22, "in", edge = "both")
-        _latest_complete_packet_timestamp = self.get_time()
+        #_latest_complete_packet_timestamp = self.get_time()
         while not port_closed :
             #level = 2
             #_latest_complete_packet_timestamp = self.get_time()
@@ -176,7 +176,7 @@ class MonThread (threading.Thread):
                 else :
                     level = 0
                 _on_change(level,tick)
-            #_latest_complete_packet_timestamp = self.get_time()
+            _latest_complete_packet_timestamp = self.get_time()
         gpio.close()
             
     def get_time(self):
