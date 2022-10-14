@@ -162,13 +162,13 @@ class MonThread (threading.Thread):
     def run(self):
         gpio = GPIO("/dev/gpiochip0", 22, "in", edge = "both")
         while not port_closed :
-            level = 2
+            #level = 2
             if gpio.poll(None): 
-                read = gpio.read_event()
-                edge = read[0]
-                tick = read[1]/(10**3)
-                #tick = self.get_time()
-                if edge == "rising" :
+                read = gpio.read()
+                #edge = read[0]
+                #tick = read[1]/(10**3)
+                tick = self.get_time()
+                if read :
                     level = 1
                 else :
                     level = 0
