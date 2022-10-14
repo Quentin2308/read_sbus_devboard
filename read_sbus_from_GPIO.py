@@ -108,7 +108,7 @@ def _on_change(level,tick):
         #the current tick wraps around once it exceeds 32-bit unsigned or 4294967295.
         #PIGPIO docs says this happens about once every 71 minutes
         #handle this case
-        time_elapsed = 4294967295 - _last_tick + tick
+        time_elapsed = 18446744073709551616 - _last_tick + tick
         
  
     if time_elapsed >= _PACKET_BOUNDRY_TIME:
@@ -166,7 +166,7 @@ class MonThread (threading.Thread):
         while not port_closed :
             #level = 2
             #_latest_complete_packet_timestamp = self.get_time()
-            if gpio.poll(0): 
+            if gpio.poll(None): 
                 read = gpio.read_event()
                 edge = read[0]
                 tick = read[1]/(10**3)
