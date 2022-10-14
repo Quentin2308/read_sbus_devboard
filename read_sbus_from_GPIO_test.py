@@ -9,7 +9,7 @@ def connection_test(m):
     times = []
     try:
         while( not m.is_connected()):
-            time.sleep(.4)
+            time.sleep(.2)
     except KeyboardInterrupt:
         m.end_listen()
         raise
@@ -104,9 +104,10 @@ if __name__=="__main__":
     m = read_sbus_from_GPIO.MonThread(path, DATA_PIN)
     
     m.start()
-    
+    time.sleep(1)
     print('Begin Tests...')
     m.display_latest_packet()
+    m.get_latest_packet_age()
     
     connection_test(m)
     print('*******')
