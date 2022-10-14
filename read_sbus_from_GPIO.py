@@ -167,7 +167,7 @@ class MonThread (threading.Thread):
             #level = 2
             #_latest_complete_packet_timestamp = self.get_time()
             time.sleep(0.1)
-            if gpio.poll(0): 
+            if gpio.poll(None): 
                 read = gpio.read_event()
                 edge = read[0]
                 tick = read[1]/(10**3)
