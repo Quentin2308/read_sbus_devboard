@@ -136,7 +136,7 @@ def _on_change(level,tick):
         _last_tick = tick 
         return
     
-    num_bits = round((time_elapsed)/100) #10 microseconds per data bit, so number of bits since last state change is time difference/10
+    num_bits = round((time_elapsed)/1) #10 microseconds per data bit, so number of bits since last state change is time difference/10
     bit_val = bool(-level+1) #enter the level *before* this state change which is the inverse of current change.
     
     #record number of bits at the level since the state changed
@@ -152,15 +152,15 @@ def _on_change(level,tick):
     
 class MonThread (threading.Thread):
     def __init__(self, path, gpio_pin):
-        #global _latest_complete_packet_timestamp
+        global _latest_complete_packet_timestamp
         threading.Thread.__init__(self)
         #self.GPIO = GPIO(path, gpio_pin, "in", edge = "both")
         #event = self.GPIO.read_event() 
-        #_latest_complete_packet_timestamp = self.get_time()
+        _latest_complete_packet_timestamp = self.get_time()
 
         
     def run(self):
-        global _latest_complete_packet_timestamp
+        #global _latest_complete_packet_timestamp
         gpio = GPIO("/dev/gpiochip0", 22, "in", edge = "both")
         #_latest_complete_packet_timestamp = self.get_time()
         while not port_closed :
@@ -176,7 +176,7 @@ class MonThread (threading.Thread):
                 else :
                     level = 0
                 _on_change(level,tick)
-            _latest_complete_packet_timestamp = self.get_time()
+            #_latest_complete_packet_timestamp = self.get_time()
         gpio.close()
             
     def get_time(self):
