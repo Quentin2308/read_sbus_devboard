@@ -83,7 +83,7 @@ def _sanity_check_packet(packet):
         cur_UART_frame =  packet[packet_bits_ptr:packet_bits_ptr+_UART_FRAME_LENGTH]
 
         #this "and" operation will result in 100000000000 in binary for correct frame - 2048 decimal
-        if bau.ba2int(_UART_FRAME_CONFORMANCE_BITMASK & cur_UART_frame) != 2048:
+        if bau.ba2int(_UART_FRAME_CONFORMANCE_BITMASK & cur_UART_frame) != 2047:
             return (False,f'UART start or stop bits bad (frame #{packet_bits_ptr/_UART_FRAME_LENGTH+1})', cur_UART_frame)
         
         #parity bit in UART 
@@ -196,7 +196,7 @@ class MonThread (threading.Thread):
         #skip first frame, it is an SBUS start frame
         for packet_bits_ptr in range (_UART_FRAME_LENGTH,_UART_FRAME_LENGTH+22*_UART_FRAME_LENGTH,_UART_FRAME_LENGTH):
             #extract from UART frame and invert each byte
-            channel_bits[channel_bits_ptr:channel_bits_ptr+8]=packet[packet_bits_ptr+1:packet_bits_ptr+9]
+            channel_bits[channel_bits_ptr:channel_bits_ptr+8]=~packet[packet_bits_ptr+1:packet_bits_ptr+9]
             channel_bits_ptr += 8
 
         ret_list = []
