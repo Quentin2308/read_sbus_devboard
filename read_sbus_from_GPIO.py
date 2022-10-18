@@ -103,7 +103,7 @@ def _on_change(level,tick):
         _is_connected
 
     time_elapsed = tick - _last_tick
-    
+    print (_is_connected)
     if time_elapsed < 0:
         #the current tick wraps around once it exceeds 32-bit unsigned or 4294967295.
         #PIGPIO docs says this happens about once every 71 minutes
