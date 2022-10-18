@@ -114,7 +114,7 @@ def _on_change(level,tick):
     if time_elapsed >= _PACKET_BOUNDRY_TIME:
         #if we are here then this method was triggered by the first "one" of this new packet
         #and we have just completed a frame boundry
-        print ( "time_elapsed = " , time_elapsed)
+        #print ( "time_elapsed = " , time_elapsed)
         print(_sanity_check_packet(_working_packet))
         
         if (_sanity_check_packet(_working_packet)[0]):
@@ -227,7 +227,7 @@ class MonThread (threading.Thread):
         ret_list = []
         for channel_ptr in range(0,16*11,11):
             #iterate through 11-bit numbers, converting them to ints. Note little endian.
-            ret_list.append(bau.ba2int(ba.bitarray(channel_bits[channel_ptr:channel_ptr+11],endian='little')))
+            ret_list.append(bau.ba2int(ba.bitarray(channel_bits[channel_ptr:channel_ptr+11],endian='big'))) #little
         
         return ret_list
 
