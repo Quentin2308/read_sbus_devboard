@@ -104,7 +104,7 @@ if __name__=="__main__":
     m = read_sbus_from_GPIO.MonThread(path, DATA_PIN)
     
     m.start()
-    time.sleep(1)
+    time.sleep(0.1)
     print('Begin Tests...')
     m.display_latest_packet()
     m.get_latest_packet_age()
