@@ -33,7 +33,7 @@ def ping_test(m):
         time.sleep(.01) # retrieve every 10ms
         times.append(m.get_latest_packet_age())
     
-    print(f'Average Delay (ms): {mean(times)}, Max Delay (ms): {max(times)}')
+   # print(f'Average Delay (ms): {mean(times)}, Max Delay (ms): {max(times)}')
 
 def map_value(min_input,max_input,min_output,max_output,invert_mapping,input):
     #for a given input in a range, output to a normalized value in the output range
