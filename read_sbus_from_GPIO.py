@@ -83,13 +83,13 @@ def _sanity_check_packet(packet):
         cur_UART_frame =  packet[packet_bits_ptr:packet_bits_ptr+_UART_FRAME_LENGTH]
 
         #this "and" operation will result in 100000000000 in binary for correct frame - 2048 decimal
-        #if bau.ba2int(_UART_FRAME_CONFORMANCE_BITMASK & cur_UART_frame) != 2048:
-        #    return (False,f'UART start or stop bits bad (frame #{packet_bits_ptr/_UART_FRAME_LENGTH+1})', cur_UART_frame)
+        if bau.ba2int(_UART_FRAME_CONFORMANCE_BITMASK & cur_UART_frame) != 2048:
+            return (False,f'UART start or stop bits bad (frame #{packet_bits_ptr/_UART_FRAME_LENGTH+1})', cur_UART_frame)
         
         #parity bit in UART 
-        #if bau.parity(cur_UART_frame[1:9]) == cur_UART_frame[9]:
+        if bau.parity(cur_UART_frame[1:9]) == cur_UART_frame[9]:
             #due to inversion, parity checks fail when parity is equal
-        #    return (False,f'Parity check failure (frame #{packet_bits_ptr/_UART_FRAME_LENGTH+1})', cur_UART_frame )
+            return (False,f'Parity check failure (frame #{packet_bits_ptr/_UART_FRAME_LENGTH+1})', cur_UART_frame )
     
     return ret_val
 
@@ -164,6 +164,14 @@ class MonThread (threading.Thread):
         #global _latest_complete_packet_timestamp
         gpio = GPIO("/dev/gpiochip0", 22, "in", edge = "both")
         #_latest_complete_packet_timestamp = self.get_time()
+        
+        def level (edge) :
+            if edge == "rising" :
+                level = 1
+            elif edge == "falling":
+                level = 0
+            return level
+        
         while not port_closed :
             #level = 2
             #_latest_complete_packet_timestamp = self.get_time()
@@ -171,20 +179,21 @@ class MonThread (threading.Thread):
             
             #if gpio.poll(None): 
             #debut du if
-                #x = threading.Thread(target = _on_change, args=(gpio.read(),self.get_time()))
+            #x = threading.Thread(target = _on_change, args=(gpio.read(),self.get_time()))
                 #x.start()
                 #tick = self.get_time()
             read = gpio.read_event()
+            x = threading.Thread(target = _on_change, args=(level(read[0]),self.get_time()))
                 #read2 = gpio.read()
-            edge = read[0]
-            tick = read[1]/(10**3)
+            #edge = read[0]
+            #tick = read[1]/(10**3)
                 #print(edge, tick)
-            if edge == "rising" :
-                level = 1
-                _on_change(level,tick)
-            elif edge == "falling" :
-                level = 0
-                _on_change(level,tick)
+            #if edge == "rising" :
+                #level = 1
+                #_on_change(level,tick)
+            #elif edge == "falling" :
+                #level = 0
+                #_on_change(level,tick)
                 #print(level)
             #_on_change(level,tick)
                 
