@@ -117,15 +117,15 @@ def _on_change(level,tick):
         #print ( "time_elapsed = " , time_elapsed)
         #print(_sanity_check_packet(_working_packet))
         
-        #if (_sanity_check_packet(_working_packet)[0]):
+        if (_sanity_check_packet(_working_packet)[0]):
             
             #only set _latest_complete_packet if it passes sanity check,
             #otherwise leave old value there
-        _latest_complete_packet, _working_packet = _working_packet, _latest_complete_packet
-        _latest_complete_packet_timestamp = tick
+            _latest_complete_packet, _working_packet = _working_packet, _latest_complete_packet
+            _latest_complete_packet_timestamp = tick
 
             #SBus transmits transmission status in bits 279 and 280 (failsafe), high is connected
-        _is_connected = bau.ba2int(_latest_complete_packet[279:281]) == 3
+            _is_connected = bau.ba2int(_latest_complete_packet[279:281]) == 3
             
         #fin de la boucle if
         
@@ -204,8 +204,8 @@ class MonThread (threading.Thread):
         #skip first frame, it is an SBUS start frame
         for packet_bits_ptr in range (_UART_FRAME_LENGTH,_UART_FRAME_LENGTH+22*_UART_FRAME_LENGTH,_UART_FRAME_LENGTH):
             #extract from UART frame and invert each byte
-            #channel_bits[channel_bits_ptr:channel_bits_ptr+8]=~packet[packet_bits_ptr+1:packet_bits_ptr+9]
-            channel_bits[channel_bits_ptr:channel_bits_ptr+8]=packet[packet_bits_ptr:packet_bits_ptr+8]
+            channel_bits[channel_bits_ptr:channel_bits_ptr+8]=~packet[packet_bits_ptr+1:packet_bits_ptr+9]
+            #channel_bits[channel_bits_ptr:channel_bits_ptr+8]=packet[packet_bits_ptr:packet_bits_ptr+8]
             channel_bits_ptr += 8
 
         ret_list = []
