@@ -39,7 +39,7 @@ import time
 
 
 #minimum time between packets in microseconds (6000 microseconds is a typical gap, but the code looks for 5000 or *more*, in case there is some timing error)
-_PACKET_BOUNDRY_TIME = 5000 
+_PACKET_BOUNDRY_TIME = 15000 
 
 #in bits
 _PACKET_LENGTH = 298
@@ -102,7 +102,7 @@ def _on_change(level,tick):
         _latest_complete_packet_timestamp, \
         _is_connected
 
-    time_elapsed = (tick - _last_tick)/2
+    time_elapsed = (tick - _last_tick)
     #print (_is_connected)
     if time_elapsed < 0:
         #the current tick wraps around once it exceeds 32-bit unsigned or 4294967295.
