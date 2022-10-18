@@ -183,7 +183,7 @@ class MonThread (threading.Thread):
                 #x.start()
                 #tick = self.get_time()
                 read = gpio.read_event()
-                x = threading.Thread(target = _on_change, args=(level(read[0]),read[1]/(10**3)), deamon = True)
+                x = threading.Thread(target = _on_change, args=(level(read[0]),read[1]/(10**3)), daemon = True)
                 x.start()
                 #read2 = gpio.read()
             #edge = read[0]
