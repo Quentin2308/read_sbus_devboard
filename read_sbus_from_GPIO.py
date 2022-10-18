@@ -83,13 +83,13 @@ def _sanity_check_packet(packet):
         cur_UART_frame =  packet[packet_bits_ptr:packet_bits_ptr+_UART_FRAME_LENGTH]
 
         #this "and" operation will result in 100000000000 in binary for correct frame - 2048 decimal
-        if bau.ba2int(_UART_FRAME_CONFORMANCE_BITMASK & cur_UART_frame) != 2048:
-            return (False,f'UART start or stop bits bad (frame #{packet_bits_ptr/_UART_FRAME_LENGTH+1})', cur_UART_frame)
+        #if bau.ba2int(_UART_FRAME_CONFORMANCE_BITMASK & cur_UART_frame) != 2048:
+        #    return (False,f'UART start or stop bits bad (frame #{packet_bits_ptr/_UART_FRAME_LENGTH+1})', cur_UART_frame)
         
         #parity bit in UART 
-        if bau.parity(cur_UART_frame[1:9]) == cur_UART_frame[9]:
+        #if bau.parity(cur_UART_frame[1:9]) == cur_UART_frame[9]:
             #due to inversion, parity checks fail when parity is equal
-            return (False,f'Parity check failure (frame #{packet_bits_ptr/_UART_FRAME_LENGTH+1})', cur_UART_frame )
+        #    return (False,f'Parity check failure (frame #{packet_bits_ptr/_UART_FRAME_LENGTH+1})', cur_UART_frame )
     
     return ret_val
 
@@ -103,7 +103,7 @@ def _on_change(level,tick):
         _is_connected
 
     time_elapsed = (tick - _last_tick)
-    #print (_is_connected)
+    print (_is_connected)
     if time_elapsed < 0:
         #the current tick wraps around once it exceeds 32-bit unsigned or 4294967295.
         #PIGPIO docs says this happens about once every 71 minutes
@@ -114,7 +114,7 @@ def _on_change(level,tick):
     if time_elapsed >= _PACKET_BOUNDRY_TIME:
         #if we are here then this method was triggered by the first "one" of this new packet
         #and we have just completed a frame boundry
-        print ( "time_elapsed = " , time_elapsed)
+        #print ( "time_elapsed = " , time_elapsed)
         print(_sanity_check_packet(_working_packet))
         
         if (_sanity_check_packet(_working_packet)[0]):
