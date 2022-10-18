@@ -114,7 +114,7 @@ def _on_change(level,tick):
     if time_elapsed >= _PACKET_BOUNDRY_TIME:
         #if we are here then this method was triggered by the first "one" of this new packet
         #and we have just completed a frame boundry
-        #print ( "time_elapsed = " , time_elapsed)
+        print ( "time_elapsed = " , time_elapsed)
         print(_sanity_check_packet(_working_packet))
         
         if (_sanity_check_packet(_working_packet)[0]):
@@ -243,6 +243,12 @@ class MonThread (threading.Thread):
     def is_connected(self):
         return _is_connected
 
+    
+    
+    
+    
+    
+    
     #Uses curses library to display all channel data in static screen
     #Note this is a blocking call - no other code will execute until the user
     #exits the screen by pressing a key.
