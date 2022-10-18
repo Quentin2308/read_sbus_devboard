@@ -125,7 +125,7 @@ def _on_change(level,tick):
             _latest_complete_packet_timestamp = tick
 
             #SBus transmits transmission status in bits 279 and 280 (failsafe), high is connected
-            _is_connected = bau.ba2int(_latest_complete_packet[279:281]) == 3
+            _is_connected = bau.ba2int(_latest_complete_packet[279:281]) == 2 #3
             
         #fin de la boucle if
         
