@@ -87,7 +87,7 @@ def _sanity_check_packet(packet):
             return (False,f'UART start or stop bits bad (frame #{packet_bits_ptr/_UART_FRAME_LENGTH+1})', cur_UART_frame)
         
         #parity bit in UART 
-        if bau.parity(cur_UART_frame[1:9]) == cur_UART_frame[9]:
+        if bau.parity(cur_UART_frame[1:9]) != cur_UART_frame[9]:
             #due to inversion, parity checks fail when parity is equal
             return (False,f'Parity check failure (frame #{packet_bits_ptr/_UART_FRAME_LENGTH+1})', cur_UART_frame )
     
