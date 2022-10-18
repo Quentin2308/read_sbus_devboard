@@ -175,15 +175,16 @@ class MonThread (threading.Thread):
         while not port_closed :
             #level = 2
             #_latest_complete_packet_timestamp = self.get_time()
-            #time.sleep(0.1)
+            #time.sleep(0.01)
             
             #if gpio.poll(None): 
             #debut du if
-            #x = threading.Thread(target = _on_change, args=(gpio.read(),self.get_time()))
+          
                 #x.start()
                 #tick = self.get_time()
             read = gpio.read_event()
-            x = threading.Thread(target = _on_change, args=(level(read[0]),self.get_time()))
+            x = threading.Thread(target = _on_change, args=(level(read[0]),read[1]/(10**3)))
+            x.start()
                 #read2 = gpio.read()
             #edge = read[0]
             #tick = read[1]/(10**3)
