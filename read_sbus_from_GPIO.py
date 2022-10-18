@@ -115,7 +115,7 @@ def _on_change(level,tick):
         #if we are here then this method was triggered by the first "one" of this new packet
         #and we have just completed a frame boundry
         print ( "time_elapsed = " , time_elapsed)
-        #print(_sanity_check_packet(_working_packet))
+        print(_sanity_check_packet(_working_packet))
         
         if (_sanity_check_packet(_working_packet)[0]):
             
