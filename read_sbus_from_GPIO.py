@@ -114,7 +114,7 @@ def _on_change(level,tick):
     if time_elapsed >= _PACKET_BOUNDRY_TIME:
         #if we are here then this method was triggered by the first "one" of this new packet
         #and we have just completed a frame boundry
-        print ( "time_elapsed = " , time_elapsed)
+        #print ( "time_elapsed = " , time_elapsed)
         print(_sanity_check_packet(_working_packet))
         
         if (_sanity_check_packet(_working_packet)[0]):
@@ -177,7 +177,7 @@ class MonThread (threading.Thread):
             read = gpio.read_event()
                 #read2 = gpio.read()
             edge = read[0]
-            tick = read[1]/(2*10**3)
+            tick = read[1]/(10**3)
                 #print(edge, tick)
             if edge == "rising" :
                 level = 1
