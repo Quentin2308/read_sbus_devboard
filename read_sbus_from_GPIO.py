@@ -176,7 +176,7 @@ class MonThread (threading.Thread):
                 #read2 = gpio.read()
                 edge = read[0]
                 #tick = read[1]/(10**3)
-                #print(edge, tick)
+                print(edge, tick)
                 if edge == "rising" :
                     level = 1
                 else :
