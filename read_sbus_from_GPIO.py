@@ -83,7 +83,7 @@ def _sanity_check_packet(packet):
         cur_UART_frame =  packet[packet_bits_ptr:packet_bits_ptr+_UART_FRAME_LENGTH]
 
         #this "and" operation will result in 100000000000 in binary for correct frame - 2048 decimal
-        if bau.ba2int(_UART_FRAME_CONFORMANCE_BITMASK & cur_UART_frame) != 2047:
+        if bau.ba2int(_UART_FRAME_CONFORMANCE_BITMASK & cur_UART_frame) != 2048:
             return (False,f'UART start or stop bits bad (frame #{packet_bits_ptr/_UART_FRAME_LENGTH+1})', cur_UART_frame)
         
         #parity bit in UART 
