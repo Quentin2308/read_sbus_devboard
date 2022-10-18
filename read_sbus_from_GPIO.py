@@ -171,11 +171,11 @@ class MonThread (threading.Thread):
             if gpio.poll(0): 
                 #x = threading.Thread(target = _on_change, args=(gpio.read(),self.get_time()))
                 #x.start()
-                #tick = self.get_time()
+                tick = self.get_time()
                 read = gpio.read_event()
                 #read2 = gpio.read()
                 edge = read[0]
-                tick = read[1]/(10**3)
+                #tick = read[1]/(10**3)
                 #print(edge, tick)
                 if edge == "rising" :
                     level = 1
