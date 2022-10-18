@@ -115,19 +115,20 @@ def _on_change(level,tick):
         #if we are here then this method was triggered by the first "one" of this new packet
         #and we have just completed a frame boundry
         #print ( "time_elapsed = " , time_elapsed)
-        print(_sanity_check_packet(_working_packet))
+        #print(_sanity_check_packet(_working_packet))
         
-        if (_sanity_check_packet(_working_packet)[0]):
+        #if (_sanity_check_packet(_working_packet)[0]):
             
             #only set _latest_complete_packet if it passes sanity check,
             #otherwise leave old value there
-            _latest_complete_packet, _working_packet = _working_packet, _latest_complete_packet
-            _latest_complete_packet_timestamp = tick
+        _latest_complete_packet, _working_packet = _working_packet, _latest_complete_packet
+        _latest_complete_packet_timestamp = tick
 
             #SBus transmits transmission status in bits 279 and 280 (failsafe), high is connected
-            _is_connected = bau.ba2int(_latest_complete_packet[279:281]) == 3
+        _is_connected = bau.ba2int(_latest_complete_packet[279:281]) == 3
             
-
+        #fin de la boucle if
+        
         #reset working packet to accept the new packet data
         _working_packet.setall(0)
         _working_packet_ptr = 0
