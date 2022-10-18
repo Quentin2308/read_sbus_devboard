@@ -168,7 +168,7 @@ class MonThread (threading.Thread):
             #level = 2
             #_latest_complete_packet_timestamp = self.get_time()
             #time.sleep(0.1)
-            if gpio.poll(None): 
+            if gpio.poll(0.1): 
                 #x = threading.Thread(target = _on_change, args=(gpio.read(),self.get_time()))
                 #x.start()
                 tick = self.get_time()
@@ -176,7 +176,7 @@ class MonThread (threading.Thread):
                 #read2 = gpio.read()
                 edge = read[0]
                 #tick = read[1]/(10**3)
-                print(edge, tick)
+                #print(edge, tick)
                 if edge == "rising" :
                     level = 1
                 else :
